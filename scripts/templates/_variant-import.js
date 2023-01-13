@@ -1,5 +1,5 @@
 import { rule, $, $$, $i, store, app, log } from '../_setup.js';
-import { html } from '../_global.js';
+import { html } from '../_utils.js';
 import __variableId__ from './___variableId__.js';
 
 export default () => {
