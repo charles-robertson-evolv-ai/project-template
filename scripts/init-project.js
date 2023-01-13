@@ -113,21 +113,20 @@ function getContextFiles(contextPath, context) {
             template: `${scriptTemplatePath}/context.scss`,
             postProcess: () => {
                 const importStatements = [];
-                const variantDeclarations = [];
+                // const variantDeclarations = [];
                 context.variables.forEach((variable) => {
                     const cid = variable.id;
                     variable.variants.forEach((variant) => {
                         const vid = variant.id;
                         importStatements.push(
-                            `@use '_imports/_${cid}/${vid}';`
+                            `@use '_imports/_${cid}/${vid} as ${cid}${vid}';`
                         );
-
-                        variantDeclarations.push(
-                            `body.evolv-${context.id}-${cid}${vid} {\n` +
-                                `    @extend %${cid};\n` +
-                                `    @import '_imports/_${cid}/${vid}';\n` +
-                                '}\n'
-                        );
+                        // variantDeclarations.push(
+                        //     `body.evolv-${context.id}-${cid}${vid} {\n` +
+                        //         `    @extend %${cid};\n` +
+                        //         `    @import '_imports/_${cid}/${vid} as ${cid}${vid}';\n` +
+                        //         '}\n'
+                        // );
                     });
                 });
                 replaceText(
@@ -135,11 +134,11 @@ function getContextFiles(contextPath, context) {
                     '__variantImports__',
                     importStatements.join('\n')
                 );
-                replaceText(
-                    `${contextPath}/context.scss`,
-                    '__variantDeclarations__',
-                    variantDeclarations.join('\n')
-                );
+                // replaceText(
+                //     `${contextPath}/context.scss`,
+                //     '__variantDeclarations__',
+                //     variantDeclarations.join('\n')
+                // );
             },
         },
     ];
@@ -162,12 +161,12 @@ function getImportFiles(importPath, contextId) {
             template: `${scriptTemplatePath}/_instrument.js`,
         },
         {
-            file: `${importPath}/_global.js`,
-            template: `${scriptTemplatePath}/_global.js`,
+            file: `${importPath}/_utils.js`,
+            template: `${scriptTemplatePath}/_utils.js`,
         },
         {
-            file: `${importPath}/_global.scss`,
-            template: `${scriptTemplatePath}/_global.scss`,
+            file: `${importPath}/_utils.scss`,
+            template: `${scriptTemplatePath}/_utils.scss`,
         },
     ];
 }
