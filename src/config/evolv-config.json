@@ -2,7 +2,7 @@
     "name": "New Project",
     "contexts": [
         {
-            "id": "ctx1",
+            "id": "context1",
             "display_name": "Home page",
             "referenceUrls": ["https://www.verizon.com"],
             "condition": {

@@ -1,11 +1,11 @@
 import copy from 'rollup-plugin-copy';
-// import scss from 'rollup-plugin-scss';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 
-const evolvConfig = require('./evolv-config.json');
+const evolvConfig = require('./src/config/evolv-config.json');
 
-function buildFile(path) {
-    var input = `./src/${path}`;
-    var output = `./dist/${path}`;
+function buildServeFile(path) {
+    var input = `./src/contexts/${path}`;
+    var output = `./serve/${path}`;
 
     return {
         input: `${input}.js`,
@@ -13,16 +13,20 @@ function buildFile(path) {
             file: `${output}.js`,
             format: 'iife',
         },
-        // plugins: [
-        //     scss({
-        //         include: [`${input}.scss`],
-        //         output: `${output}.css`,
-        //     }),
-        // ],
     };
 }
 
-function extractFiles(config) {
+function buildExportFile(path) {
+    var input = `./src/contexts/${path}`;
+    var output = `./export/.build/${path}`;
+
+    return {
+        input: `${input}.js`,
+        output: { file: `${output}.js` },
+    };
+}
+
+function extractFiles(config, buildFile) {
     var files = [];
     config.contexts.forEach((context) => {
         var contextPath = `${context.id}`;
@@ -38,20 +42,21 @@ function extractFiles(config) {
     return files;
 }
 
-var files = extractFiles(evolvConfig);
+var files = extractFiles(evolvConfig, buildServeFile);
+files.push(...extractFiles(evolvConfig, buildExportFile));
 files.push({
-    input: `./loader/local-loader.js`,
+    input: `./src/local/catalyst-local.js`,
     output: {
-        file: `./dist/local-loader.js`,
+        dir: `./serve`,
+        format: 'iife',
     },
     plugins: [
         copy({
-            targets: [
-                { src: 'src/integrations/catalyst-local.js', dest: 'dist' },
-            ],
+            targets: [{ src: './src/local/loader-local.js', dest: './serve' }],
         }),
+        nodeResolve(),
     ],
 });
 
-// console.info('config', JSON.stringify(files))
+// console.info('config', JSON.stringify(files));
 export default files;

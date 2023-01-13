@@ -6,7 +6,7 @@ const { URL } = require('url');
 
 //update yml with config updates
 try {
-    var config = loadConfig(absolutePath('./evolv-config.json'));
+    var config = loadConfig(absolutePath('./src/config/evolv-config.json'));
     var newModel = mergeToYaml(config);
     saveYaml(newModel, config.output || 'export/exp.yml');
     console.info('merge completed');
@@ -75,7 +75,7 @@ function mergeToYaml(config) {
         var newContext = mergeContext(context, contextId, config.baseUrl || '');
         context.variables.forEach((variable) => {
             var variableId = `${contextId}_${variable.id}`;
-            var basePath = `./export/build/${context.id}/${variable.id}`;
+            var basePath = `./export/.build/${context.id}/${variable.id}`;
             variable.variants.forEach(
                 (v) => (v.source = `${basePath}/${v.id}`)
             );
@@ -109,6 +109,7 @@ function getUrlCond(context) {
 }
 
 function buildPredicates(context, baseUrl) {
+    console.info('building predicates:', baseUrl);
     var url = new URL(baseUrl);
     var protocol = url.protocol.slice(0, -1);
     var baseUrlValue = `${protocol}?://${url.host}/`;
@@ -137,21 +138,12 @@ function buildPredicates(context, baseUrl) {
 }
 
 function mergeContext(context, contextId, baseUrl) {
-    var closingLength = 1;
-    var contextSuffix = `
-    rule.isActive = function(){
-      return [...document.querySelector('html').classList].includes("evolv_web_${context.id}")
-    };
-  `;
-    var contextPath = `./export/build/${context.id}/context`;
-
+    console.info('merging context:', context.display_name);
+    var contextPath = `./export/.build/${context.id}/context`;
     var jsAsset = fs.readFileSync(absolutePath(`${contextPath}.js`), 'utf8');
     var cssPath = absolutePath(`${contextPath}.css`);
     var assets = {
-        javascript:
-            jsAsset.slice(0, -closingLength) +
-            contextSuffix +
-            jsAsset.slice(-closingLength),
+        javascript: jsAsset,
         css: fs.existsSync(cssPath) ? fs.readFileSync(cssPath, 'utf8') : '',
     };
 
@@ -189,6 +181,7 @@ function mergeContext(context, contextId, baseUrl) {
 }
 
 function mergeVariable(variable, variableId, values) {
+    console.info('merging variable:', variable.display_name);
     var newVariable = {};
     newVariable._values = values;
 
@@ -211,7 +204,7 @@ function mergeVariable(variable, variableId, values) {
 
 function generateControl() {
     var yamlValue = {};
-    console.info('merging control', yamlValue);
+    console.info('generating control: Noop');
     yamlValue._display_name = 'Noop';
 
     yamlValue._metadata = { uses_noop: true, generated_control: true };
@@ -223,7 +216,7 @@ function generateControl() {
 
 function mergeVariant(variant, variantId) {
     var yamlValue = {};
-    console.info('processing variant', variant.display_name, yamlValue);
+    console.info('merging variant:', variant.display_name);
     // if (!yamlValue || !(yamlValue._value)) return generateControl(yamlValue)
 
     yamlValue._display_name = variant.display_name || '';
