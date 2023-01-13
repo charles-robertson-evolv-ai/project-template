@@ -52,7 +52,9 @@ files.push({
     },
     plugins: [
         copy({
-            targets: [{ src: './src/local/loader-local.js', dest: './serve' }],
+            targets: [
+                { src: './src/local/scaffold-loader.js', dest: './serve' },
+            ],
         }),
         nodeResolve(),
     ],

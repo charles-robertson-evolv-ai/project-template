@@ -1,5 +1,5 @@
 {
-    "name": "project-template",
+    "name": "scaffold-catalyst-deluxe",
     "version": "1.0.0",
     "description": "",
     "main": "context.js",
@@ -12,7 +12,7 @@
         "watch:rollup": "rollup --config rollup.config.js --watch",
         "watch:sass": "sass ./src/contexts:./serve --watch",
         "watch:yaml": "nodemon --watch ./export/.build ./scripts/export-yaml.js",
-        "serve": "http-server ./serve --port 8888 --cors --silent",
+        "serve": "http-server ./serve --port 8080 --cors --silent",
         "build": "npm-run-all -l -s del build:* export:yaml",
         "start": "npm-run-all -ls -s del build:* -p watch:* serve"
     },

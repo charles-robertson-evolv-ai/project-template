@@ -2,7 +2,7 @@
     //load and run variants
     var variants = JSON.parse(document.currentScript.getAttribute('variants'));
     var port =
-        JSON.parse(document.currentScript.getAttribute('port')) || '8888';
+        JSON.parse(document.currentScript.getAttribute('port')) || '8080';
     var url = `http://localhost:${port}`;
     var prefix = '[evolv-local] loader:';
 
