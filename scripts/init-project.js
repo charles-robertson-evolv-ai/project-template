@@ -35,7 +35,7 @@ function isEmpty(directory) {
 }
 
 function makeProject(config) {
-    if (!isEmpty(contextsPath))
+    if (fs.existsSync(contextsPath) && !isEmpty(contextsPath))
         throw new Error(`directory '${contextsPath}' has contents`);
 
     makeFolder(contextsPath);
@@ -119,7 +119,7 @@ function getContextFiles(contextPath, context) {
                     variable.variants.forEach((variant) => {
                         const vid = variant.id;
                         importStatements.push(
-                            `@use '_imports/_${cid}/${vid} as ${cid}${vid}';`
+                            `@use '_imports/_${cid}/${vid}' as ${cid}${vid};`
                         );
                         // variantDeclarations.push(
                         //     `body.evolv-${context.id}-${cid}${vid} {\n` +
