@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import config from '../evolv.config.js';
 
 const contextsPath = `./src/contexts`;
 const scriptTemplatePath = `./scripts/templates`;
@@ -8,9 +8,7 @@ function log() {
     console.info('[init:project]', ...arguments);
 }
 
-var config;
 try {
-    config = loadConfig(absolutePath('./src/config/evolv-config.json'));
     makeProject(config);
     // log('project created');
 } catch (e) {

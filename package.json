@@ -4,7 +4,7 @@
     "description": "",
     "main": "context.js",
     "scripts": {
-        "init": "node ./scripts/init-project.js",
+        "init:project": "node ./scripts/init-project.js",
         "del": "rm -rf ./serve ./export",
         "build:rollup": "rollup --config rollup.config.js",
         "build:sass": "sass ./src/contexts:./serve --no-source-map",
@@ -16,6 +16,7 @@
         "build": "npm-run-all -l -s del build:* export:yaml",
         "start": "npm-run-all -ls -s del build:* -p watch:* serve"
     },
+    "type": "module",
     "prettier": {
         "tabWidth": 4,
         "singleQuote": true

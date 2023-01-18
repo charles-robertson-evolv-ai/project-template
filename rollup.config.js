@@ -1,7 +1,6 @@
 import copy from 'rollup-plugin-copy';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-
-const evolvConfig = require('./src/config/evolv-config.json');
+import config from './evolv.config.js';
 
 function buildServeFile(path) {
     var input = `./src/contexts/${path}`;
@@ -42,8 +41,8 @@ function extractFiles(config, buildFile) {
     return files;
 }
 
-var files = extractFiles(evolvConfig, buildServeFile);
-files.push(...extractFiles(evolvConfig, buildExportFile));
+var files = extractFiles(config, buildServeFile);
+files.push(...extractFiles(config, buildExportFile));
 files.push({
     input: `./src/local/catalyst-local.js`,
     output: {
@@ -52,9 +51,7 @@ files.push({
     },
     plugins: [
         copy({
-            targets: [
-                { src: './src/local/scaffold-loader.js', dest: './serve' },
-            ],
+            targets: [{ src: './src/local/local-loader.js', dest: './serve' }],
         }),
         nodeResolve(),
     ],

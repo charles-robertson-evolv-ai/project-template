@@ -76,7 +76,7 @@ var variants = ['planPage/c1/v1'];
 var port = '8080';
 
 var expScript = document.createElement('script');
-expScript.setAttribute('src', `http://localhost:${port}/scaffold-loader.js`);
+expScript.setAttribute('src', `http://localhost:${port}/local-loader.js`);
 expScript.setAttribute('variants', JSON.stringify(variants));
 expScript.setAttribute('port', port);
 

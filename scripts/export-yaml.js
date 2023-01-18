@@ -1,12 +1,12 @@
-const Base64 = require('base-64');
-const fs = require('fs');
-const path = require('path');
-const yaml = require('js-yaml');
-const { URL } = require('url');
+import Base64 from 'base-64';
+import fs from 'fs';
+import path from 'path';
+import yaml from 'js-yaml';
+import { URL } from 'url';
+import config from '../evolv.config.js';
 
 //update yml with config updates
 try {
-    var config = loadConfig(absolutePath('./src/config/evolv-config.json'));
     var newModel = mergeToYaml(config);
     saveYaml(newModel, config.output || 'export/exp.yml');
     console.info('merge completed');
