@@ -1,12 +1,12 @@
 export default {
-    name: 'New Project',
+    name: 'Untitled Project',
     contexts: [
         {
             id: 'context1',
             display_name: 'Home page',
             referenceUrls: ['https://www.verizon.com'],
             condition: {
-                'web.url': '/',
+                'web.url': '',
             },
             variables: [
                 {
@@ -27,5 +27,5 @@ export default {
         },
     ],
     baseUrl: 'https://www.verizon.com',
-    output: 'export/new-project.yml',
+    output: 'export/untitled-project.yml',
 };

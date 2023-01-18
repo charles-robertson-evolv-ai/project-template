@@ -9,7 +9,7 @@ The `main` branch represents a plain version independent of tech stack. Each bra
 | @lit          | Uses lit templating  | https://www.npmjs.com/package/@evolv-delivery/lit-harness                                                           |
 | @mutate       | Uses mutate lib      | NA - Built in                                                                                                       |
 | @mutate-lit   | Uses lit templating  | https://www.npmjs.com/package/@evolv-delivery/lit-harness                                                           |
-| **@catalyst** | **Uses Catalyst **   | **https://www.npmjs.com/package/@evolv-delivery/catalyst**                                                          |
+| **@catalyst** | **Uses Catalyst**   | **https://www.npmjs.com/package/@evolv-delivery/catalyst**                                                          |
 | @catalyst-lit | Users Catalyst & lit | https://www.npmjs.com/package/@evolv-delivery/lit-harness<br>https://www.npmjs.com/package/@evolv-delivery/catalyst |
 
 ## Generating a project
@@ -38,7 +38,7 @@ To create your folders (and scaffolded files) for the project, edit the `evolv-c
 
 Once you have your experiment outline specified in the json, run the following to build your folder structure:
 
-`npm run init`
+`npm run init:project`
 
 ## Start Development Server
 
@@ -72,7 +72,7 @@ Add an Inject file to your tab group and use the default `head` as the insertion
 The following snippet should be used as the content.
 
 ```
-var variants = ['planPage/c1/v1'];
+var variants = ['context1/c1/v1']; // Change context and variant names to fit your project
 var port = '8080';
 
 var expScript = document.createElement('script');
