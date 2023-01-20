@@ -16,13 +16,13 @@ The `main` branch represents a plain version independent of tech stack. Each bra
 
 To start a new project in the `my-project` directory with the scaffold:
 
-`npx degit git@github.com:evolv-ai/scaffold.git@catalyst --mode=git my-project`
+`npx degit git@github.com:evolv-ai/scaffold.git@catalyst --mode=git new-project`
 
 ## Initialize project
 
 Then got into the folder:
 
-`cd my-project`
+`cd new-project`
 
 And then, run:
 
@@ -60,19 +60,13 @@ Install from: https://chrome.google.com/webstore/detail/resource-override/pkoacg
 
 Add tab group url for the path you want to load the variants into. You can use either a base url (https://www.evolv.ai/**) or a specific path.
 
-#### Add Change Header Rule
-
-Use `Allow Outside Content` from the preset options and it should include two lines with:
-`Remove` `Content-Security-Policy` and
-`Remove` `X-Content-Security-Policy`
-
 #### Add Inject file rule
 
 Add an Inject file to your tab group and use the default `head` as the insertion point.
 The following snippet should be used as the content.
 
 ```
-var variants = ['context1/c1/v1']; // Change context and variant names to fit your project
+var variants = ['context1/c1/c1v1']; // Change context and variant names to fit your project
 var port = '8080';
 
 var expScript = document.createElement('script');
@@ -83,7 +77,7 @@ expScript.setAttribute('port', port);
 document.head.appendChild(expScript);
 ```
 
-**Note**: The variants can be any combination where each variant string is specified by the following `<context id>/<concept id>/<variant id>`.
+**Note**: The variants can be any combination where each variant string is specified by the following `<context id>/<concept id>/<concept id><variant id>`.
 
 ## Build YAML file
 
