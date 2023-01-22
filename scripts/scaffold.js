@@ -5,7 +5,7 @@ const contextsPath = `./src/contexts`;
 const scriptTemplatePath = `./scripts/templates`;
 
 function log() {
-    console.info('[init:project]', ...arguments);
+    console.log('\x1b[32m[scaffold]\x1b[0m', ...arguments);
 }
 
 try {
@@ -48,7 +48,7 @@ function makeProject(config) {
             makeVariableImportFiles(variableImportPath, context.id, cid);
             variable.variants.forEach((variant) => {
                 const vid = variant.id;
-                const variantPath = `${variablePath}/${cid}${vid}`;
+                const variantPath = `${variablePath}/${vid}`;
                 const variantImportPath = `${variableImportPath}/_${cid}${vid}`;
                 makeVariantFiles(variantPath, `${cid}${vid}`);
                 makeVariantImportFiles(variantImportPath, context.id, cid, vid);

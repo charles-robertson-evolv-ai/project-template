@@ -1,12 +1,12 @@
-const Base64 = require('base-64');
-const fs = require('fs');
-const path = require('path');
-const yaml = require('js-yaml');
-const { URL } = require('url');
+import Base64 from 'base-64';
+import fs from 'fs';
+import path from 'path';
+import yaml from 'js-yaml';
+import { URL } from 'url';
+import config from '../evolv.config.js';
 
 //update yml with config updates
 try {
-    var config = loadConfig(absolutePath('./src/config/evolv-config.json'));
     var newModel = mergeToYaml(config);
     var aaPath =
         path.dirname(config.output) +
@@ -16,15 +16,8 @@ try {
     console.log('export', aaPath);
 
     saveYaml(newModel, aaPath || 'export/exp-aa.yml');
-} catch (e) {}
-
-//support functions
-function absolutePath(path) {
-    return path;
-}
-
-function loadConfig(configPath) {
-    return JSON.parse(fs.readFileSync(configPath, 'utf8'));
+} catch (e) {
+    console.log(e);
 }
 
 function saveYaml(yamlModel, yamlPath) {
@@ -76,7 +69,7 @@ function mergeToYaml(config) {
             var variableId = `${contextId}_${variable.id}`;
             var basePath = `./export/.build/${context.id}/${variable.id}`;
             variable.variants.forEach(
-                (v) => (v.source = `${basePath}/${variable.id}${v.id}`)
+                (v) => (v.source = `${basePath}/${v.id}`)
             );
             var variants = [
                 generateControl(),
@@ -136,7 +129,7 @@ function buildPredicates(context, baseUrl) {
 }
 
 function mergeContext(context, contextId, baseUrl) {
-    var contextPath = `./export/.build/${context.id}/context`;
+    // var contextPath = `./export/.build/${context.id}/context`;
     // var jsAsset = fs.readFileSync(absolutePath(`${contextPath}.js`), 'utf8');
     // var cssPath = absolutePath(`${contextPath}.css`);
     var assets = {
@@ -218,8 +211,8 @@ function mergeVariant(variant, variantId) {
     yamlValue._value = { id: variantId };
 
     if (variant.source) {
-        var jsPath = absolutePath(`${variant.source}.js`);
-        var cssPath = absolutePath(`${variant.source}.css`);
+        // var jsPath = absolutePath(`${variant.source}.js`);
+        // var cssPath = absolutePath(`${variant.source}.css`);
 
         yamlValue._value.script = '';
         yamlValue._value.styles = '';
